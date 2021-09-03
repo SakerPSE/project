@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="news">
+
+	<sql id="newsWhere">
+		<where>
+			<if test="sval != null and sval != ''">
+				<if test="stype == 'all'">
+					title LIKE '%${sval}%' OR content LIKE '%${sval}%'
+				</if>
+				<if test="stype != 'all'">
+					${stype} LIKE '%${sval}%'
+				</if>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectAll" resultType="news.NewsVo" parameterType="news.NewsVo">
+		SELECT * FROM news
+		<include refid="newsWhere"/>
+		ORDER BY ${orderby} ${direct} <!-- 파라미터로 들어감(parameterType="news.NewsVo") -->
+		LIMIT ${startIdx},${pageRow}
+	</select>
+	
+	<select id="count" resultType="int" parameterType="news.NewsVo">
+		SELECT COUNT(*) FROM news
+		<include refid="newsWhere"/>
+	</select>
+	
+	<select id="detail" resultType="news.NewsVo" parameterType="news.NewsVo"> <!-- 상세보기 -->
+		SELECT * FROM news WHERE no = #{no}
+	</select>
+	
+	<update id="updateReadCount"> <!-- 조회수 -->
+		UPDATE news SET readcount=readcount+1 WHERE no = #{no}
+	</update>
+	
+	<insert id="insert" parameterType="news.NewsVo">
+		INSERT INTO news (title, content, regdate, readcount, filename_org, filename_real)
+		values (#{title}, #{content}, NOW(), 0, #{filename_org}, #{filename_real})
+	</insert>
+	
+	<update id="update" parameterType="news.NewsVo"> 
+		UPDATE news SET title=#{title}, content=#{content}
+		<if test="filename_org != null">
+			 , filename_org= #{filename_org}, filename_real=#{filename_real}
+		</if>
+		WHERE no=#{no}
+	</update>
+	
+	<update id="delFilename" parameterType="news.NewsVo"> 
+		UPDATE news SET 
+			filename_org='', filename_real=''
+		WHERE no=#{no}
+	</update>
+	
+	<delete id="delete" parameterType="news.NewsVo">
+		DELETE FROM news WHERE no=#{no}
+	</delete>
+</mapper>

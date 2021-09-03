@@ -1,0 +1,152 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+}
+.wrap {width:1200px; margin:0 auto;}
+.header {
+    text-align: center;
+    padding:30px;
+}
+.menu {
+    height:40px;
+}
+.menu > ul > li{
+    list-style: none; /* 기호 제거 */
+    border:1px solid #000000;
+    text-align: center;
+    width:20%;
+    float: left;
+    height:40px;
+    line-height: 40px;
+    z-index:999;
+}
+.container {
+    overflow: hidden;
+    height:auto;
+    width:1200px;
+    padding:20px;
+    margin:0 auto;
+}
+.container > .size {width:100%;text-align:center;}
+.container > .size > .section {
+    float:left;
+    width:33.3333%;
+    margin:6px 0;
+    /*margin:1px;*/
+}
+/*.container > .size > .section > img {width:100%;}*/
+.leftmenu {
+    width:30%;
+    float:left;
+    height:500px;
+    text-align:center;
+    line-height: 500px;
+}
+.content {
+    width:70%;
+    float:left;
+    height:500px;
+    line-height: 500px;
+}
+.footer {
+    clear:both;
+    background-color: #221f1f;
+    color:#999;
+    padding:30px 5px;
+}
+.footer > .size > .sns_area {
+    position:absolute;
+    right: 0;
+    top:0;
+}
+.footer > .size > .info > p {
+    line-height: 30px;
+}
+.sns_area > a {
+    margin:5px;
+}
+li {
+    list-style: none;
+    position: relative;
+}
+.depth1 > li > a {
+    display: block;
+}
+.depth2 > li > a {
+    display: block;
+}
+.depth2 {
+    display: none;
+}
+.visual {
+    height:500px;
+    text-align: center;
+    line-height: 500px;
+    overflow: hidden;
+    position: relative;
+    width:100%;
+}
+.swiper {
+    height:500px;
+}
+.swiper-slide {
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.size {
+    position: relative;
+}
+.login {
+    position:absolute;
+    right:0;
+    top:0;
+}
+.divPop {
+    position:absolute;
+    z-index:9999;
+}
+.quickMenu {
+    position:absolute;
+    z-index:8888;
+}
+.info > .content {
+    width:50%;
+    padding:10px;
+}
+.info > .content > .board_area {
+    width:100%;
+    height:450px;
+    border : 1px solid #999;
+    padding:10px;
+}
+.info > .content > .board_area > .board_title {
+    line-height:40px;
+    float:left;
+    width:100px;
+    text-align: center;
+    cursor: pointer;
+}
+.info > .content > .board_area > .board_title.on {
+    background-color: #d3d3d3;
+    color:#ffffff;
+}
+.info > .content > .board_area > .board_content > ul {
+    clear:both;
+    border-top:1px solid #999;
+}
+.info > .content > .board_area > .board_content > ul > li {
+    line-height:42px;
+    border-bottom: 1px solid #999;
+}
+#board_data {display: none;}
+.info > .content > .video_area {
+    height:450px;
+}
+.info > .content > .board_area > .board_content > ul > li > span {
+    float:right;
+}

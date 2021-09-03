@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<sql id="boardWhere">
+		<where>
+			<if test="sval != null and sval != ''">
+				<if test="stype == 'all'">
+					title LIKE '%${sval}%' OR content LIKE '%${sval}%'
+				</if>
+				<if test="stype != 'all'">
+					${stype} LIKE '%${sval}%'
+				</if>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectAll" resultType="board.BoardVo" parameterType="board.BoardVo">
+		SELECT * FROM board
+		<include refid="boardWhere"/>
+		ORDER BY ${orderby} ${direct} <!-- 파라미터로 들어감(parameterType="board.BoardVo") -->
+		LIMIT ${startIdx},${pageRow}
+	</select>
+	
+	<select id="count" resultType="int" parameterType="board.BoardVo">
+		SELECT COUNT(*) FROM board
+		<include refid="boardWhere"/>
+	</select>
+	
+	<select id="detail" resultType="board.BoardVo" parameterType="board.BoardVo"> <!-- 상세보기 -->
+		SELECT * FROM board WHERE no = #{no}
+	</select>
+	
+	<update id="updateReadCount"> <!-- 조회수 -->
+		UPDATE board SET readcount=readcount+1 WHERE no = #{no}
+	</update>
+	
+	<insert id="insert" parameterType="board.BoardVo">
+		INSERT INTO board (title, content, regdate, readcount, filename_org, filename_real)
+		values (#{title}, #{content}, NOW(), 0, #{filename_org}, #{filename_real})
+	</insert>
+	
+	<update id="update" parameterType="board.BoardVo"> 
+		UPDATE board SET title=#{title}, content=#{content}
+		<if test="filename_org != null">
+			 , filename_org= #{filename_org}, filename_real=#{filename_real}
+		</if>
+		WHERE no=#{no}
+	</update>
+	
+	<update id="delFilename" parameterType="board.BoardVo"> 
+		UPDATE board SET 
+			filename_org='', filename_real=''
+		WHERE no=#{no}
+	</update>
+	
+	<delete id="delete" parameterType="board.BoardVo">
+		DELETE FROM board WHERE no=#{no}
+	</delete>
+</mapper>
